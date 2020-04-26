@@ -8,11 +8,11 @@
         <version>2.2.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>me.xueyao</groupId>
-    <artifactId>simon-union-api</artifactId>
+    <groupId>me.jensvn</groupId>
+    <artifactId>jensvn-union-api</artifactId>
     <version>0.0.1</version>
-    <name>simon-pub-api</name>
-    <description>流体石头的便利店</description>
+    <name>jensvn-pub-api</name>
+    <description>淘客查券助手</description>
 
     <properties>
         <java.version>1.8</java.version>
