@@ -7,7 +7,7 @@ import me.jensvn.common.*;
 import me.jensvn.config.PubConfig;
 import me.jensvn.constant.WxConstant;
 import me.jensvn.enums.WxEnum;
-import me.jensvn.vo.request.wx.ValidateSignReq;
+import me.jensvn.vo.wx.request.ValidateSignReq;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 

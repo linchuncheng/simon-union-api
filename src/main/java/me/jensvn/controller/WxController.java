@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.jensvn.common.R;
 import me.jensvn.service.WxService;
-import me.jensvn.vo.request.wx.ValidateSignReq;
+import me.jensvn.vo.wx.request.ValidateSignReq;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -2,7 +2,7 @@ package me.jensvn.service;
 
 import me.jensvn.common.TbkHelper;
 import me.jensvn.constant.WxConstant;
-import me.jensvn.vo.response.goods.GoodsResponse;
+import me.jensvn.vo.goods.response.GoodsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

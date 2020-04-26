@@ -1,4 +1,4 @@
-package me.jensvn.vo.request.wx;
+package me.jensvn.vo.wx.request;
 
 import lombok.Data;
 

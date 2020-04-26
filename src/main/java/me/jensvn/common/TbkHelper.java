@@ -11,7 +11,7 @@ import com.taobao.api.response.TbkSpreadGetResponse;
 import lombok.extern.slf4j.Slf4j;
 import me.jensvn.config.PubConfig;
 import me.jensvn.constant.TbkConstant;
-import me.jensvn.vo.response.goods.GoodsResponse;
+import me.jensvn.vo.goods.response.GoodsResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

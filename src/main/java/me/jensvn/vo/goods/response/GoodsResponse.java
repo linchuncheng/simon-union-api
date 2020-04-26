@@ -1,4 +1,4 @@
-package me.jensvn.vo.response.goods;
+package me.jensvn.vo.goods.response;
 
 import lombok.Data;
 
