@@ -8,11 +8,12 @@
         <version>2.2.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>me.jensvn</groupId>
-    <artifactId>jensvn-union-api</artifactId>
+    <groupId>pet.sankei</groupId>
+    <artifactId>union-api</artifactId>
     <version>0.0.1</version>
-    <name>jensvn-pub-api</name>
+    <name>union-api</name>
     <description>淘客查券助手</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>1.8</java.version>
@@ -81,7 +82,7 @@
             <artifactId>taobao-sdk-java</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/lib/taobao-sdk-java-auto_1582815107200-20200317.jar
+            <systemPath>${project.basedir}/src/main/resources/lib/taobao-sdk-java-auto_1587953745129-20200427.jar
             </systemPath>
         </dependency>
     </dependencies>
