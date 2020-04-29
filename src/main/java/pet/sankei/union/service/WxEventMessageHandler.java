@@ -1,20 +1,20 @@
 package pet.sankei.union.service;
 
-import pet.sankei.union.common.Consumer;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Service;
+import pet.sankei.union.common.Consumers;
 import pet.sankei.union.common.WxXmlUtil;
 import pet.sankei.union.constant.WxConstant;
 import pet.sankei.union.enums.WxEnum;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
-public class WxEventMessageHandler implements Consumer<Map<String, String>>, InitializingBean {
+public class WxEventMessageHandler implements Consumers.Consumer<Map<String, String>>, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Consumer.register("wx.message", "event", this);
+        Consumers.register("wx.message", "event", this);
     }
 
     @Override

@@ -3,7 +3,7 @@ package pet.sankei.union.service;
 import com.alibaba.fastjson.JSONObject;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pet.sankei.union.common.Consumer;
+import pet.sankei.union.common.Consumers;
 import pet.sankei.union.common.SignHelper;
 import pet.sankei.union.common.WxXmlUtil;
 import pet.sankei.union.config.PubConfig;
@@ -59,7 +59,7 @@ public class WxService {
         ServletInputStream inputStream = request.getInputStream();
         Map<String, String> map = WxXmlUtil.streamToMap(inputStream);
         String msgType = map.get(WxConstant.MSG_TYPE);
-        String resultXml = Consumer.consume("wx.message", msgType, map, o -> {
+        String resultXml = Consumers.consume("wx.message", msgType, map, o -> {
             map.put(WxConstant.CONTENT, "该信息类型不支持");
             Map<String, String> resultMap = WxXmlUtil.withBase(map);
             resultMap.put(WxConstant.MSG_TYPE, WxEnum.MsgType.TEXT.getMsg());
