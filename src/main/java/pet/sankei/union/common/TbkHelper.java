@@ -33,8 +33,7 @@ public class TbkHelper {
 
     @Bean
     public void init() {
-        this.taobaoClient = new DefaultTaobaoClient(pubConfig.getTaobaoUrl(),
-                pubConfig.getMamaKey(), pubConfig.getMamaSecret());
+        this.taobaoClient = new DefaultTaobaoClient(pubConfig.getTaobaoServer(), pubConfig.getMamaKey(), pubConfig.getMamaSecret());
     }
 
     /**

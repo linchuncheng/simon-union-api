@@ -12,23 +12,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class PubConfig {
 
+    /**
+     * 微信
+     */
     @Value("${wx.token}")
     private String token;
     @Value("${wx.appId}")
     private String appId;
     @Value("${wx.appSecret}")
     private String appSecret;
-
     @Value("${wx.encodingAESKey}")
     private String encodingAESKey;
-    @Value("${url.wx.accessTokenUrl}")
+    @Value("${wx.accessTokenUrl}")
     private String accessTokenUrl;
-    @Value("${url.wx.createMenu}")
+    @Value("${wx.createMenuUrl}")
     private String createMenuUrl;
 
     /**
-     * ---------淘宝客联盟--------
+     * ---------淘宝联盟--------
      */
+    @Value("${taobao.server}")
+    private String taobaoServer;
     @Value("${taobao.mama.key}")
     private String mamaKey;
     @Value("${taobao.mama.secret}")
@@ -36,19 +40,16 @@ public class PubConfig {
     @Value("${taobao.mama.adzoneId}")
     private Long adzoneId;
 
-    @Value("${url.taobao}")
-    private String taobaoUrl;
-
     /**
      * -------京东联盟----------
      */
+    @Value("${jd.server}")
+    private String jdServer;
     @Value("${jd.union.key}")
     private String jdKey;
     @Value("${jd.union.secret}")
     private String jdSecret;
     @Value("${jd.union.siteId}")
     private String jdSiteId;
-    @Value("${url.jd}")
-    private String jdUrl;
 
 }
