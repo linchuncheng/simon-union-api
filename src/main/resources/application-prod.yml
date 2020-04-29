@@ -1,7 +1,7 @@
 server:
   port: 8080
 wx:
-  token: unionapi
+  token: jensvnunionapi
   appId: wx1a68402642f8c48a
   appSecret: 27ec7b8ffb4261657ca4d4b869c6c0a0
   encodingAESKey: 0Asfg1yeQoAkkC4GpKQYnQZQTZtIQF92Zfhzygdelxr
