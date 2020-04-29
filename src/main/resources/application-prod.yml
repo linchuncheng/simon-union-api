@@ -13,7 +13,7 @@ taobao:
   union:
     key: 28189674
     secret: 5d36ee67d5220f1ab991afcfdc86ee38
-    adzoneId: 109714600357
+    adzoneId: 110324800261
 jd:
   server: https://router.jd.com/api
   union:
