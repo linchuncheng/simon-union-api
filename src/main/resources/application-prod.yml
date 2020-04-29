@@ -3,16 +3,16 @@ server:
   servlet:
     context-path: /weixin
 wx:
-  token: # 微信公众号 token
-  appId: # 微信公众号 appid
-  appSecret: #微信公众号appSecret
-  encodingAESKey: # 暂时没用到
+  token: unionapi
+  appId: wx1a68402642f8c48a
+  appSecret: 27ec7b8ffb4261657ca4d4b869c6c0a0
+  encodingAESKey: 0Asfg1yeQoAkkC4GpKQYnQZQTZtIQF92Zfhzygdelxr
 
 taobao:
   mama:
-    key: #淘宝联盟 key
-    secret: #淘宝联盟 secret
-    adzoneId: #淘宝联盟 adzoneId
+    key: 28189674
+    secret: 5d36ee67d5220f1ab991afcfdc86ee38
+    adzoneId: 109714600357
 jd:
   union:
     key: #京东联盟 key
