@@ -66,8 +66,10 @@ public class TbkHelper {
         List<GoodsResponse> goodsResponseList = resultList.stream().map(mapData -> {
             GoodsResponse goodsResponse = new GoodsResponse();
             BeanUtils.copyProperties(mapData, goodsResponse);
-            goodsResponse.setUrl(mapData.getUrl());
-            goodsResponse.setCouponShareUrl(mapData.getCouponShareUrl());
+            goodsResponse.setUrl("mapData.getUrl()");
+            goodsResponse.setCouponShareUrl("mapData.getCouponShareUrl()");
+//            goodsResponse.setUrl(mapData.getUrl());
+//            goodsResponse.setCouponShareUrl(mapData.getCouponShareUrl());
 //            goodsResponse.setUrl(genShortUrl(mapData.getUrl()));
 //            goodsResponse.setCouponShareUrl(genShortUrl(mapData.getCouponShareUrl()));
             return goodsResponse;

@@ -12,7 +12,7 @@ public class TbkConstant {
     /**
      * 页大小，默认20，1~100
      */
-    public static final long pageSize = 3L;
+    public static final long pageSize = 1L;
     /**
      * 第几页，默认：１
      */

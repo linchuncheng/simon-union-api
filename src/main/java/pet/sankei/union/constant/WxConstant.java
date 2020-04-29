@@ -20,11 +20,8 @@ public class WxConstant {
     public final static String FROM_USER_NAME = "FromUserName";
     public final static String CREATE_TIME = "CreateTime";
 
-    public final static String WELCOME = "欢迎关注流体石头的分享店!\n" +
-            "可以在本公众号领取商品优惠券" +
-            "\n目前支持淘宝商品\n" +
-            "\n----- 使用说明 -----\n" +
-            "淘宝>请发送商品名称";
+    public final static String WELCOME = "欢迎关注APP查券小助手!\n" +
+            "可以在本公众号查询/领取商品优惠券，奖励及提现请到APP进行";
 
 
     /**
@@ -33,17 +30,16 @@ public class WxConstant {
     /**
      * 有优惠的格式
      */
-    public final static String COUPON_FORMAT = "%s\n----------------------------------\n" +
-            "原价:%s元,券后价仅%s元" +
-            "\n----------------------------------\n" +
+    public final static String COUPON_FORMAT = "%s\n" +
+            "【在售价】%s元\n" +
+            "【券后价】%s元\n" +
             "【立即领券】点击链接即可领券购买：\n%s\n" +
             "【立即下单】点击链接立即下单：\n%s";
     /**
      * 正常的格式
      */
-    public final static String NORMAL_FORMAT = "%s\n----------------------------------\n" +
-            "【在售价】%s 元" +
-            "\n----------------------------------\n" +
+    public final static String NORMAL_FORMAT = "%s\n" +
+            "【在售价】%s元\n" +
             "【立即下单】点击链接立即下单：\n%s";
     /**
      * 分割钱
