@@ -18,10 +18,10 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2020-03-03 10:38
  **/
 @RestController
-@RequestMapping("/base")
+@RequestMapping("/wx")
 @Slf4j
 @AllArgsConstructor
-public class WxBaseController {
+public class WxController {
     private WxService wxService;
 
     /**
@@ -29,8 +29,18 @@ public class WxBaseController {
      * @return
      */
     @GetMapping("/getAccessToken")
-    public R<String> getAccessToken() {
-        return wxService.getAccessToken();
+    public String getAccessToken() {
+        return wxService.getAccessToken().getData();
+    }
+
+    @GetMapping("/tokenSign")
+    public String validateSign(ValidateSignReq req) {
+        return wxService.validateSign(req);
+    }
+
+    @PostMapping("/tokenSign")
+    public void receiveMessage(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        wxService.receiveMessage(request, response);
     }
 
 }
