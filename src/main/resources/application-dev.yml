@@ -8,7 +8,7 @@ wx:
   encodingAESKey: # 暂时没用到
 
 taobao:
-  mama:
+  union:
     key: #淘宝联盟 key
     secret: #淘宝联盟 secret
     adzoneId: #淘宝联盟 adzoneId

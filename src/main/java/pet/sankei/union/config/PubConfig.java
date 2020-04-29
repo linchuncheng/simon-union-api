@@ -33,11 +33,11 @@ public class PubConfig {
      */
     @Value("${taobao.server}")
     private String taobaoServer;
-    @Value("${taobao.mama.key}")
-    private String mamaKey;
-    @Value("${taobao.mama.secret}")
-    private String mamaSecret;
-    @Value("${taobao.mama.adzoneId}")
+    @Value("${taobao.union.key}")
+    private String unionKey;
+    @Value("${taobao.union.secret}")
+    private String unionSecret;
+    @Value("${taobao.union.adzoneId}")
     private Long adzoneId;
 
     /**
