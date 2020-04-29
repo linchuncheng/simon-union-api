@@ -2,13 +2,13 @@ package pet.sankei.union.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pet.sankei.union.common.R;
-import pet.sankei.union.service.WxService;
-import pet.sankei.union.vo.wx.request.ValidateSignReq;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pet.sankei.union.common.R;
+import pet.sankei.union.service.WxService;
+import pet.sankei.union.vo.wx.request.ValidateSignReq;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,10 +18,10 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2020-03-03 10:38
  **/
 @RestController
-@RequestMapping("/wx")
+@RequestMapping("/base")
 @Slf4j
 @AllArgsConstructor
-public class WxController {
+public class WxBaseController {
     private WxService wxService;
 
     /**
@@ -31,16 +31,6 @@ public class WxController {
     @GetMapping("/getAccessToken")
     public R<String> getAccessToken() {
         return wxService.getAccessToken();
-    }
-
-    @GetMapping("/tokenSign")
-    public String validateSign(ValidateSignReq req) {
-        return wxService.validateSign(req);
-    }
-
-    @PostMapping("/tokenSign")
-    public void receiveMessage(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        wxService.receiveMessage(request, response);
     }
 
 }
