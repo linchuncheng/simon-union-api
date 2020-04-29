@@ -9,19 +9,14 @@ import lombok.Getter;
  **/
 
 public interface WxEnum {
-
-    @AllArgsConstructor
-    @Getter
-    enum MsgType {
-        TEXT("text"),
-        IMAGE("image"),
-        VOICE("voice"),
-        VIDEO("video"),
-        SHORT_VIDEO("shortvideo"),
-        LOCATION("location"),
-        LINK("link");
-        String msg;
-    }
+    String MsgType_TEXT = "text";
+    String MsgType_EVENT = "event";
+    String MsgType_IMAGE = "image";
+    String MsgType_VOICE = "voice";
+    String MsgType_VIDEO = "video";
+    String MsgType_SHORT_VIDEO = "shortvideo";
+    String MsgType_LOCATION = "location";
+    String MsgType_LINK = "link";
 
     @AllArgsConstructor
     @Getter
