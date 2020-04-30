@@ -5,7 +5,9 @@ import com.taobao.api.ApiException;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
 import com.taobao.api.request.TbkDgMaterialOptionalRequest;
+import com.taobao.api.request.TbkTpwdCreateRequest;
 import com.taobao.api.response.TbkDgMaterialOptionalResponse;
+import com.taobao.api.response.TbkTpwdCreateResponse;
 import lombok.extern.slf4j.Slf4j;
 import pet.sankei.union.config.PubConfig;
 import pet.sankei.union.constant.TbkConstant;
@@ -101,5 +103,15 @@ public class TbkHelper {
 //        log.info("生成的短链接 = {}", content);
 //        return content;
 //    }
+
+    public TbkTpwdCreateResponse createTpwd(String userId, String text, String url,String logo) throws ApiException {
+        TbkTpwdCreateRequest req = new TbkTpwdCreateRequest();
+        req.setUserId(userId);
+        req.setText(text);// 长度大于5个字符
+        req.setUrl("https://uland.taobao.com/");
+        req.setLogo("https://uland.taobao.com/");
+        req.setExt("{}");
+        return taobaoClient.execute(req);
+    }
 
 }

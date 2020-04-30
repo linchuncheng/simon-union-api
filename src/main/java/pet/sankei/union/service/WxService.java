@@ -30,8 +30,8 @@ public class WxService {
     private RestTemplate restTemplate;
     private PubConfig pubConfig;
     private SignHelper signHelper;
-    private GoodsService goodsService;
     private CopyWritingConfig copyWritingConfig;
+    private WxTextHandler wxTextHandler;
 
     public R<String> getAccessToken() {
         Map<String, String> map = new HashMap<>(16);
@@ -81,8 +81,12 @@ public class WxService {
 
     // 处理文本
     public void handleText(Map<String, String> map, HttpServletResponse response) throws Exception {
-        Map<String, String> result = WxXmlUtil.of(map);
         String content = map.get(WxConstant.CONTENT);
+        // 解析口令、链接
+        if (this.checkTpwd(content)) {
+            wxTextHandler.convertTpwd(content, response, map);
+        }
+        // 导购
         List<String> guideWords = Stream.of(copyWritingConfig.getGuideTriggers().split("\\|")).collect(Collectors.toList());
         boolean triggerGuide = false;
         for (String guideWord : guideWords) {
@@ -93,10 +97,10 @@ public class WxService {
             }
         }
         if (triggerGuide) {
-            result.put(WxConstant.MSG_TYPE, WxEnum.MsgType_TEXT);
-            result.put(WxConstant.CONTENT, goodsService.findGoodsByTitle(content));
-            WxXmlUtil.sendMessage(response.getOutputStream(), result);
+            wxTextHandler.goodsGuide(content, response, map);
+            return;
         }
+
     }
 
     // 处理事件
@@ -110,5 +114,8 @@ public class WxService {
         WxXmlUtil.sendMessage(response.getOutputStream(), result);
     }
 
+    private boolean checkTpwd(String content) {
+        return true;
+    }
 
 }
