@@ -16,6 +16,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.*;
 
@@ -33,7 +34,7 @@ public class WxXmlUtil {
      * @return
      * @throws Exception
      */
-    public static Map<String, String> streamToMap(InputStream inputStream) throws Exception {
+    public static Map<String, String> toMap(InputStream inputStream) throws Exception {
         StringBuilder sb = new StringBuilder();
         String temp;
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
@@ -42,18 +43,18 @@ public class WxXmlUtil {
         }
         bufferedReader.close();
         inputStream.close();
-        return xmlToMap(sb.toString());
+        return toMap(sb.toString());
     }
 
     /**
      * 把字符串写到response中
      *
      * @param outputStream
-     * @param xmlStr
+     * @param result
      * @throws Exception
      */
-    public static void writeToResponse(OutputStream outputStream, String xmlStr) throws Exception {
-        outputStream.write(xmlStr.getBytes("UTF-8"));
+    public static void sendMessage(OutputStream outputStream, Map<String, String> result) throws Exception {
+        outputStream.write(WxXmlUtil.toXML(result));
         outputStream.close();
     }
 
@@ -64,7 +65,7 @@ public class WxXmlUtil {
      * @return XML数据转换后的Map
      * @throws Exception
      */
-    public static Map<String, String> xmlToMap(String strXML) throws Exception {
+    public static Map<String, String> toMap(String strXML) throws Exception {
         try {
             Map<String, String> data = new HashMap<String, String>();
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -100,7 +101,7 @@ public class WxXmlUtil {
      * @return XML格式的字符串
      * @throws Exception
      */
-    public static String mapToXml(Map<String, String> data) throws Exception {
+    public static byte[] toXML(Map<String, String> data) throws Exception {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
         org.w3c.dom.Document document = documentBuilder.newDocument();
@@ -124,12 +125,14 @@ public class WxXmlUtil {
         StringWriter writer = new StringWriter();
         StreamResult result = new StreamResult(writer);
         transformer.transform(source, result);
-        String output = writer.getBuffer().toString(); //.replaceAll("\n|\r", "");
         try {
-            writer.close();
-        } catch (Exception ex) {
+            return writer.getBuffer().toString().getBytes(StandardCharsets.UTF_8); //.replaceAll("\n|\r", "");
+        } finally {
+            try {
+                writer.close();
+            } catch (Exception ex) {
+            }
         }
-        return output;
     }
 
     /**
@@ -140,7 +143,7 @@ public class WxXmlUtil {
      * @return XML格式的字符串
      * @throws Exception
      */
-    public static String mapToXml(Map<String, String> data, Map<String, String> inner) throws Exception {
+    public static String toXML(Map<String, String> data, Map<String, String> inner) throws Exception {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
         org.w3c.dom.Document document = documentBuilder.newDocument();
@@ -192,7 +195,7 @@ public class WxXmlUtil {
      * @param key  API密钥
      * @return 含有sign字段的XML
      */
-    public static String generateSignedXml(final Map<String, String> data, String key) throws Exception {
+    public static byte[] generateSignedXml(final Map<String, String> data, String key) throws Exception {
         return generateSignedXml(data, key, WxConstant.MD5);
     }
 
@@ -204,10 +207,10 @@ public class WxXmlUtil {
      * @param signType 签名类型
      * @return 含有sign字段的XML
      */
-    public static String generateSignedXml(final Map<String, String> data, String key, String signType) throws Exception {
+    public static byte[] generateSignedXml(final Map<String, String> data, String key, String signType) throws Exception {
         String sign = generateSignature(data, key, signType);
         data.put(WxConstant.SIGN, sign);
-        return mapToXml(data);
+        return toXML(data);
     }
 
 
@@ -220,7 +223,7 @@ public class WxXmlUtil {
      * @throws Exception
      */
     public static boolean isSignatureValid(String xmlStr, String key) throws Exception {
-        Map<String, String> data = xmlToMap(xmlStr);
+        Map<String, String> data = toMap(xmlStr);
         if (!data.containsKey(WxConstant.SIGN)) {
             return false;
         }
@@ -390,7 +393,7 @@ public class WxXmlUtil {
      * @param map
      * @return
      */
-    public static Map<String, String> withBase(Map<String, String> map) {
+    public static Map<String, String> of(Map<String, String> map) {
         Map<String, String> resultMap = new HashMap<>(16);
         resultMap.put(WxConstant.TO_USER_NAME, map.get(WxConstant.FROM_USER_NAME));
         resultMap.put(WxConstant.FROM_USER_NAME, map.get(WxConstant.TO_USER_NAME));

@@ -20,3 +20,8 @@ jd:
     key: #京东联盟 key
     secret: #京东联盟 secret
     siteId: #京东联盟 siteId
+
+# 文案
+copywriting:
+  guideTriggers: 找|买 #导购触发词
+  welcome: 欢迎关注美逛查券小助手!\n可以在本公众号查询、领取商品优惠券，奖励及提现请到美逛APP操作

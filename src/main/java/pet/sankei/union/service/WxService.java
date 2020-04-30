@@ -3,12 +3,12 @@ package pet.sankei.union.service;
 import com.alibaba.fastjson.JSONObject;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pet.sankei.union.common.R;
 import pet.sankei.union.common.SignHelper;
 import pet.sankei.union.common.WxXmlUtil;
+import pet.sankei.union.config.CopyWritingConfig;
 import pet.sankei.union.config.PubConfig;
 import pet.sankei.union.constant.WxConstant;
 import pet.sankei.union.enums.WxEnum;
@@ -18,7 +18,10 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -27,8 +30,8 @@ public class WxService {
     private RestTemplate restTemplate;
     private PubConfig pubConfig;
     private SignHelper signHelper;
-    @Autowired
     private GoodsService goodsService;
+    private CopyWritingConfig copyWritingConfig;
 
     public R<String> getAccessToken() {
         Map<String, String> map = new HashMap<>(16);
@@ -59,40 +62,52 @@ public class WxService {
 
     public void receiveMessage(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ServletInputStream inputStream = request.getInputStream();
-        Map<String, String> map = WxXmlUtil.streamToMap(inputStream);
+        Map<String, String> map = WxXmlUtil.toMap(inputStream);
         String msgType = map.get(WxConstant.MSG_TYPE);
-        String resultXml;
         switch (msgType) {
             case WxEnum.MsgType_TEXT:
-                resultXml = this.acceptText(map);
+                this.handleText(map, response);
                 break;
             case WxEnum.MsgType_EVENT:
-                resultXml = this.acceptEvent(map);
+                this.handleEvent(map, response);
                 break;
             default:
-                map.put(WxConstant.CONTENT, "该信息类型不支持");
-                Map<String, String> resultMap = WxXmlUtil.withBase(map);
-                resultMap.put(WxConstant.MSG_TYPE, WxEnum.MsgType_TEXT);
-                resultXml = WxXmlUtil.mapToXml(map);
+                Map<String, String> result = WxXmlUtil.of(map);
+                result.put(WxConstant.MSG_TYPE, WxEnum.MsgType_TEXT);
+                result.put(WxConstant.CONTENT, "暂不支持该消息类型");
+                WxXmlUtil.sendMessage(response.getOutputStream(), result);
         }
-        WxXmlUtil.writeToResponse(response.getOutputStream(), resultXml);
     }
 
-    public String acceptText(Map<String, String> map) throws Exception {
+    // 处理文本
+    public void handleText(Map<String, String> map, HttpServletResponse response) throws Exception {
+        Map<String, String> result = WxXmlUtil.of(map);
         String content = map.get(WxConstant.CONTENT);
-        Map<String, String> resultMap = WxXmlUtil.withBase(map);
-        resultMap.put(WxConstant.MSG_TYPE, WxEnum.MsgType_TEXT);
-        resultMap.put(WxConstant.CONTENT, goodsService.getGoodsInfo(content));
-        return WxXmlUtil.mapToXml(resultMap);
+        List<String> guideWords = Stream.of(copyWritingConfig.getGuideTriggers().split("\\|")).collect(Collectors.toList());
+        boolean triggerGuide = false;
+        for (String guideWord : guideWords) {
+            if (content.startsWith(guideWord)) {
+                triggerGuide = true;
+                content = content.replaceFirst(guideWord, "");
+                break;
+            }
+        }
+        if (triggerGuide) {
+            result.put(WxConstant.MSG_TYPE, WxEnum.MsgType_TEXT);
+            result.put(WxConstant.CONTENT, goodsService.findGoodsByTitle(content));
+            WxXmlUtil.sendMessage(response.getOutputStream(), result);
+        }
     }
 
-    public String acceptEvent(Map<String, String> map) throws Exception {
-        Map<String, String> resultMap = WxXmlUtil.withBase(map);
-        resultMap.put(WxConstant.MSG_TYPE, WxEnum.MsgType_TEXT);
+    // 处理事件
+    public void handleEvent(Map<String, String> map, HttpServletResponse response) throws Exception {
+        Map<String, String> result = WxXmlUtil.of(map);
+        result.put(WxConstant.MSG_TYPE, WxEnum.MsgType_TEXT);
+        // 订阅公众号事件
         if (WxEnum.Event.subscribe.getMsg().equals(map.get(WxConstant.EVENT))) {
-            resultMap.put(WxConstant.CONTENT, WxConstant.WELCOME);
+            result.put(WxConstant.CONTENT, copyWritingConfig.getWelcome());
         }
-        return WxXmlUtil.mapToXml(resultMap);
+        WxXmlUtil.sendMessage(response.getOutputStream(), result);
     }
 
 

@@ -15,16 +15,16 @@ public class GoodsService {
     @Autowired
     private TbkHelper tbkHelper;
 
-    public String getGoodsInfo(String content) {
+    public String findGoodsByTitle(String title) {
         List<GoodsResponse> goodList;
         try {
-            goodList = tbkHelper.getGoodList(content);
+            goodList = tbkHelper.findGoodsByTitle(title);
         } catch (ApiException e) {
             e.printStackTrace();
             return "商品不存在";
         }
         if (goodList.isEmpty()) {
-            return "商品不存在";
+            return "[可怜]店家太小气了，都没有设置任何优惠！换一个商品试试！";
         } else {
             StringBuilder sb = new StringBuilder();
             for (GoodsResponse goodsResponse : goodList) {

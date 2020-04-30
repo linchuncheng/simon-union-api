@@ -20,8 +20,7 @@ public class WxConstant {
     public final static String FROM_USER_NAME = "FromUserName";
     public final static String CREATE_TIME = "CreateTime";
 
-    public final static String WELCOME = "欢迎关注APP查券小助手!\n" +
-            "可以在本公众号查询/领取商品优惠券，奖励及提现请到APP进行";
+    public final static String WELCOME = "欢迎关注APP查券小助手!\n可以在本公众号查询/领取商品优惠券，奖励及提现请到APP进行";
 
 
     /**
@@ -44,7 +43,7 @@ public class WxConstant {
     /**
      * 分割钱
      */
-    public final static String LINE = "\n\n---------------------\n\n";
+    public final static String LINE = "\n---------------------\n\n";
 
 
     /**

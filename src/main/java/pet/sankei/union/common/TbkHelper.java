@@ -39,17 +39,17 @@ public class TbkHelper {
     /**
      * 获得查询的商品列表
      *
-     * @param goodTitle
+     * @param goodsTitle
      * @return
      */
-    public List<GoodsResponse> getGoodList(String goodTitle) throws ApiException {
+    public List<GoodsResponse> findGoodsByTitle(String goodsTitle) throws ApiException {
         TbkDgMaterialOptionalRequest req = new TbkDgMaterialOptionalRequest();
         req.setPageSize(TbkConstant.pageSize);
         req.setPageNo(TbkConstant.pageNo);
         req.setIsOverseas(TbkConstant.isOverseas);
         req.setIsTmall(TbkConstant.isTmall);
         req.setSort(TbkConstant.sort);
-        req.setQ(goodTitle);
+        req.setQ(goodsTitle);
         req.setHasCoupon(TbkConstant.hasCoupon);
         req.setAdzoneId(pubConfig.getAdzoneId());
         req.setNeedFreeShipment(TbkConstant.needFreeShipment);
